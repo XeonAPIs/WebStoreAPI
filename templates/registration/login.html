@@ -1,0 +1,74 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block body_class %}login-body{% endblock %}
+{% block body %}
+<main class="login-page">
+  <div class="login-frame">
+    <header class="login-topbar">
+      <a class="brand login-brand" href="{% url 'dashboard' %}">
+        <span class="brand-mark">XE</span>
+        <span class="brand-copy"><b>XEON'S API</b><small>V1.0 · OPEN TO USE</small></span>
+      </a>
+      <span class="login-status"><i aria-hidden="true"></i> ENDPOINTS READY</span>
+    </header>
+    <div class="login-layout">
+      <section class="login-intro" aria-labelledby="login-intro-title">
+        <div class="login-intro-copy">
+          <p class="login-kicker">DEVELOPER ACCESS / 01</p>
+          <h1 id="login-intro-title">Make a better<br><em>connection.</em></h1>
+          <p>Explore practical APIs, try live examples, and keep the endpoints you need close at hand.</p>
+          <div class="login-process" aria-label="Explore the API dashboard">
+            <span><b>01</b> DISCOVER</span>
+            <span><b>02</b> COPY A URL</span>
+            <span><b>03</b> TEST A RESPONSE</span>
+          </div>
+        </div>
+        <div class="login-visual" aria-hidden="true">
+          <div class="login-console-card">
+            <div class="login-console-header"><span>API EXAMPLE</span><b>200 OK · DEMO</b></div>
+            <div class="login-console-path"><strong>GET</strong><code>/api/demo/example-todo/</code></div>
+            <pre>{
+  "status": "ready",
+  "items": ["plan", "build", "ship"]
+}</pre>
+          </div>
+          <div class="login-orbit">
+            <span class="login-orbit-core">XE</span>
+            <span class="login-orbit-tag login-orbit-get">GET</span>
+            <span class="login-orbit-tag login-orbit-post">POST</span>
+          </div>
+          <span class="login-visual-caption">ONE CONSOLE · MANY ENDPOINTS</span>
+        </div>
+        <div class="login-features">
+          <div><span>01 / EXPLORE</span><strong>Find an endpoint</strong></div>
+          <div><span>02 / TEST</span><strong>See the response</strong></div>
+        </div>
+        <div class="login-desktop-note">
+          <span class="login-note-label">A NOTE FOR BUILDERS / 01</span>
+          <p>Test the idea.<br><em>Build what matters.</em></p>
+          <span class="login-note-footer">START WITH ONE REQUEST <span aria-hidden="true">↗</span></span>
+        </div>
+      </section>
+      <section class="login-panel" aria-labelledby="login-form-title">
+        <p class="login-panel-kicker">PRIVATE CONSOLE <span> / </span> SIGN IN</p>
+        <div class="panel-heading">
+          <span class="section-number">01</span>
+          <h2 id="login-form-title">Welcome back</h2>
+        </div>
+        <p class="login-description">Sign in to manage your API workspace and pick up where you left off.</p>
+        {% if form.errors %}<p class="field-error" role="alert">Username or password is incorrect. Try again.</p>{% endif %}
+        {% if next %}<p class="login-auth-note">AUTHENTICATION REQUIRED</p>{% endif %}
+        <form method="post" class="brutal-form">
+          {% csrf_token %}
+          <div class="form-field"><label for="{{ form.username.id_for_label }}">USERNAME</label>{{ form.username }}</div>
+          <div class="form-field"><label for="{{ form.password.id_for_label }}">PASSWORD</label>{{ form.password }}</div>
+          <input type="hidden" name="next" value="{{ next }}">
+          <button class="pill-button form-submit" type="submit">Continue to workspace <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="login-footnote"><span aria-hidden="true">●</span> Your session is protected.</p>
+      </section>
+    </div>
+    <div class="login-meta"><span>XEON'S API / DEVELOPER PORTAL</span><span>BUILD SOMETHING USEFUL.</span></div>
+  </div>
+</main>
+{% endblock %}

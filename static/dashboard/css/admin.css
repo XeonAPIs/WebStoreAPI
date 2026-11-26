@@ -1,0 +1,380 @@
+:root {
+  color-scheme: dark;
+  --primary: #d4ff2a;
+  --secondary: #2b2bff;
+  --accent: #d4ff2a;
+  --primary-fg: #0a0a0a;
+  --body-fg: #f7f7f4;
+  --body-bg: #0a0a0a;
+  --header-color: #f7f7f4;
+  --header-branding-color: #f7f7f4;
+  --header-bg: #0a0a0a;
+  --header-link-color: #f7f7f4;
+  --breadcrumbs-fg: #a4a49f;
+  --breadcrumbs-link-fg: #d4ff2a;
+  --breadcrumbs-bg: #0a0a0a;
+  --link-fg: #d4ff2a;
+  --link-hover-color: #ffffff;
+  --link-selected-fg: #d4ff2a;
+  --hairline-color: rgba(255,255,255,.35);
+  --border-color: rgba(255,255,255,.55);
+  --error-fg: #ff7777;
+  --message-success-bg: #172000;
+  --message-warning-bg: #302500;
+  --message-error-bg: #300d0d;
+  --darkened-bg: #111111;
+  --selected-bg: #202000;
+  --selected-row: #202000;
+  --button-fg: #0a0a0a;
+  --button-bg: #d4ff2a;
+  --button-hover-bg: #ffffff;
+  --default-button-bg: #d4ff2a;
+  --default-button-hover-bg: #ffffff;
+  --close-button-bg: #272727;
+  --close-button-hover-bg: #3b3b3b;
+  --delete-button-bg: #7d2424;
+  --delete-button-hover-bg: #a93636;
+  --object-tools-bg: #111111;
+  --object-tools-hover-bg: #202020;
+  --font-family-primary: "Inter Tight", Arial, sans-serif;
+  --font-family-monospace: "JetBrains Mono", monospace;
+}
+
+html, body, #container, #content, #content-main, #changelist {
+  background: #0a0a0a;
+  color: #f7f7f4;
+  font-family: "Inter Tight", Arial, sans-serif;
+}
+body, #container, .module, .inline-group, .submit-row, #changelist-filter,
+.paginator, .results, .form-row, .aligned .form-row {
+  border-radius: 0;
+  box-shadow: none;
+}
+a:link, a:visited { color: #d4ff2a; }
+a:hover { color: #ffffff; }
+#header {
+  min-height: 48px;
+  padding: 8px 20px;
+  background: #0a0a0a;
+  color: #f7f7f4;
+  border-bottom: 1px solid rgba(255,255,255,.72);
+}
+#site-name { display: flex; align-items: center; min-height: 32px; }
+#site-name a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #f7f7f4;
+  font-family: "Inter Tight", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+.admin-brand-mark {
+  width: 27px;
+  height: 27px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.72);
+  font: 9px "JetBrains Mono", monospace;
+  letter-spacing: 0;
+}
+.admin-brand-tag {
+  margin-left: 2px;
+  color: #d4ff2a;
+  font: 8px "JetBrains Mono", monospace;
+  letter-spacing: .12em;
+}
+#user-tools {
+  padding-top: 5px;
+  color: #a4a49f;
+  font: 9px "JetBrains Mono", monospace;
+  letter-spacing: .05em;
+}
+#user-tools a { color: #d4ff2a; }
+#user-tools a:hover { color: #ffffff; }
+div.breadcrumbs {
+  padding: 9px 20px;
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  background: #0a0a0a;
+  color: #a4a49f;
+  font: 8px "JetBrains Mono", monospace;
+  letter-spacing: .1em;
+}
+div.breadcrumbs a { color: #d4ff2a; }
+#content { padding: 22px 24px; }
+#content h1, #content h2, #content h3, caption, .module caption {
+  color: #f7f7f4;
+  font-family: "Inter Tight", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -.045em;
+}
+#content h1 { font-size: 30px; }
+.module, .inline-group, #changelist, #changelist-filter,
+.submit-row, .login .content-main {
+  border: 1px solid rgba(255,255,255,.55);
+  background: #0a0a0a;
+}
+.module h2, .module caption, .inline-group h2 {
+  padding: 10px 12px;
+  background: #111111;
+  color: #d4ff2a;
+  font: 9px "JetBrains Mono", monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+table { border-color: rgba(255,255,255,.4); }
+thead th {
+  background: #111111;
+  color: #d4ff2a;
+  font: 8px "JetBrains Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+td, th { border-bottom-color: rgba(255,255,255,.25); }
+tr:nth-child(odd), .row-form-errors { background: #101010; }
+tr:nth-child(even) { background: #0a0a0a; }
+tr.selected { background: #202000; }
+.form-row, .aligned .form-row { border-bottom: 1px solid rgba(255,255,255,.2); }
+label, .form-row p, .help, p.help, span.help {
+  color: #c1c1bb;
+}
+input, textarea, select, .vTextField, .vLargeTextField, .vURLField,
+.vIntegerField, .vDateField, .vTimeField, .vDateTimeField {
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 0;
+  background: #0a0a0a;
+  color: #f7f7f4;
+  font-family: "Inter Tight", Arial, sans-serif;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: #d4ff2a;
+  outline-color: #d4ff2a;
+}
+select option { background: #0a0a0a; color: #f7f7f4; }
+input[type="checkbox"], input[type="radio"] { accent-color: #d4ff2a; }
+input[type="submit"], input[type="button"], button, .button, a.button,
+.submit-row input, .object-tools a, .object-tools a:link, .object-tools a:visited {
+  border: 0;
+  border-radius: 999px;
+  background: #d4ff2a;
+  color: #0a0a0a;
+  font-family: "Inter Tight", Arial, sans-serif;
+  font-weight: 800;
+  box-shadow: none;
+}
+input[type="submit"]:hover, input[type="button"]:hover, button:hover,
+.button:hover, a.button:hover, .submit-row input:hover, .object-tools a:hover {
+  background: #ffffff;
+  color: #0a0a0a;
+}
+.object-tools { margin-top: 2px; }
+.object-tools a { padding: 6px 13px; }
+.delete-button, .deletelink, a.deletelink, .submit-row .deletelink-box a {
+  color: #ff7777;
+}
+.messagelist li {
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 0;
+  box-shadow: none;
+}
+.messagelist li.success { background: #172000; color: #d4ff2a; }
+.messagelist li.warning { background: #302500; color: #ffe083; }
+.messagelist li.error { background: #300d0d; color: #ff9999; }
+#nav-sidebar {
+  border-right: 1px solid rgba(255,255,255,.55);
+  background: #0a0a0a;
+}
+#nav-sidebar .current-model, #nav-sidebar .current-app .section {
+  background: #d4ff2a;
+  color: #0a0a0a;
+}
+#nav-sidebar a { color: #f7f7f4; }
+#nav-sidebar a:hover { background: #d4ff2a; color: #0a0a0a; }
+#nav-sidebar .current-model a { color: #0a0a0a; }
+#nav-sidebar .module th, #nav-sidebar .module td { border: 0; }
+#nav-sidebar .module caption { border-bottom: 1px solid rgba(255,255,255,.35); }
+#changelist-filter h2 {
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  background: #111111;
+  color: #d4ff2a;
+  font: 9px "JetBrains Mono", monospace;
+}
+#changelist-filter li.selected a { color: #d4ff2a; }
+.paginator { color: #a4a49f; }
+body.login #content { box-sizing: border-box; width: 100%; }
+#footer { color: #a4a49f; }
+
+body:not(.login) {
+  font-size: 14px;
+  line-height: 1.55;
+}
+#site-name a { font-size: 15px; }
+#user-tools { font-size: 11px; }
+div.breadcrumbs {
+  padding: 12px 24px;
+  font-size: 11px;
+}
+#content {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 40px);
+}
+#content h1 {
+  margin: 0 0 24px;
+  font-size: clamp(27px, 3vw, 36px);
+}
+.module, .inline-group, #changelist, #changelist-filter {
+  overflow: hidden;
+  border-color: rgba(255,255,255,.2);
+  border-radius: 12px;
+}
+.module h2, .module caption, .inline-group h2, #changelist-filter h2 {
+  padding: 13px 16px;
+  font-size: 10px;
+}
+thead th {
+  padding: 12px 10px;
+  font-size: 10px;
+}
+td, th { padding-top: 10px; padding-bottom: 10px; }
+input, textarea, select, .vTextField, .vLargeTextField, .vURLField,
+.vIntegerField, .vDateField, .vTimeField, .vDateTimeField {
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 9px 11px;
+  border-radius: 8px;
+}
+input[type="checkbox"], input[type="radio"] {
+  min-height: 0;
+  padding: 0;
+}
+input[type="submit"], input[type="button"], button, .button, a.button,
+.submit-row input, .object-tools a, .object-tools a:link, .object-tools a:visited {
+  min-height: 40px;
+  padding: 10px 16px;
+}
+body.login #container {
+  box-sizing: border-box;
+  width: min(460px, calc(100vw - 32px));
+  min-width: 0;
+  min-height: 0;
+  height: auto;
+  margin: auto;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #141414, #090909);
+  box-shadow: 0 24px 80px rgba(0,0,0,.42);
+}
+body.login {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+body.login #header {
+  justify-content: center;
+  padding: 24px 28px 16px;
+  border-bottom: 0;
+}
+body.login #site-name { justify-content: center; }
+body.login #content {
+  margin: 0;
+  padding: 8px 32px 32px;
+  border: 0;
+  background: transparent;
+}
+body.login .admin-login-intro { margin-bottom: 24px; }
+body.login .admin-login-kicker {
+  margin: 0 0 10px;
+  color: #d4ff2a;
+  font: 10px "JetBrains Mono", monospace;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+body.login .admin-login-intro h1 {
+  margin: 0 0 8px;
+  font-size: clamp(27px, 6vw, 34px);
+  line-height: 1.05;
+}
+body.login .admin-login-intro p:last-child {
+  margin: 0;
+  color: #a4a49f;
+  font-size: 14px;
+}
+body.login #login-form .form-row {
+  padding: 8px 0;
+  border: 0;
+}
+body.login #login-form .form-row label {
+  display: block;
+  margin-bottom: 6px;
+  color: #f7f7f4;
+  font-size: 13px;
+  font-weight: 600;
+}
+body.login #login-form .form-row input {
+  width: 100%;
+  min-height: 46px;
+}
+body.login #login-form .submit-row {
+  padding: 16px 0 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+body.login #login-form .submit-row input {
+  min-width: 120px;
+  min-height: 46px;
+}
+body.login .password-reset-link {
+  margin-top: 12px;
+  text-align: left;
+}
+@media (max-width: 767px) {
+  #header { padding-right: 58px; }
+  #user-tools { font-size: 8px; }
+  #content { padding: 16px 12px; }
+  #content h1 { font-size: 25px; }
+  #nav-sidebar { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.55); }
+  .object-tools { float: none; margin: 0 0 12px; }
+  body.login #header { padding: 20px 20px 14px; }
+  body.login #content { padding: 8px 22px 24px; }
+}
+
+.object-tools a, .object-tools a:link, .object-tools a:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.2;
+}
+#user-tools #logout-form {
+  display: inline;
+  margin: 0;
+}
+#user-tools #logout-form button {
+  min-height: 26px;
+  padding: 3px 8px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 4px;
+  background: transparent;
+  color: #d4ff2a;
+  font: 9px "JetBrains Mono", monospace;
+  letter-spacing: .05em;
+  line-height: 1.2;
+}
+#user-tools #logout-form button:hover {
+  border-color: #d4ff2a;
+  background: #d4ff2a;
+  color: #0a0a0a;
+}
+.column-api_url {
+  white-space: nowrap;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+}

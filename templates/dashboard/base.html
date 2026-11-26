@@ -1,0 +1,31 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>{% block title %}Dashboard{% endblock %} · XEON'S API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}{% endblock %}
+<footer class="site-footer">
+  <span class="site-footer-license">GPL-3.0</span>
+  <nav class="site-footer-links" aria-label="Project links">
+    <a href="https://t.me/XeonModz" target="_blank" rel="noopener noreferrer">
+      TELEGRAM <span class="site-footer-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a href="{% url 'docs' %}">
+      DOCS <span class="site-footer-arrow" aria-hidden="true">↗</span>
+    </a>
+  </nav>
+</footer>
+<script src="{% static 'dashboard/js/dashboard.obfuscated.js' %}" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

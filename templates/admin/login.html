@@ -1,0 +1,94 @@
+{% extends "dashboard/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Admin sign in" %}{% endblock %}
+{% block body_class %}login-body{% endblock %}
+{% block head %}{{ form.media }}{% endblock %}
+{% block body %}
+<main class="login-page">
+  <div class="login-frame">
+    <header class="login-topbar">
+      <a class="brand login-brand" href="{% url 'dashboard' %}">
+        <span class="brand-mark">XE</span>
+        <span class="brand-copy"><b>XEON'S API</b><small>V1.0 · OPEN TO USE</small></span>
+      </a>
+      <span class="login-status"><i aria-hidden="true"></i> PRIVATE WORKSPACE</span>
+    </header>
+    <div class="login-layout">
+      <section class="login-intro" aria-labelledby="admin-intro-title">
+        <div class="login-intro-copy">
+          <p class="login-kicker">ADMIN ACCESS / 01</p>
+          <h1 id="admin-intro-title">Keep your APIs<br><em>in good hands.</em></h1>
+          <p>Manage endpoints, organize categories, and keep your workspace running smoothly.</p>
+          <div class="login-process" aria-label="Admin workspace tools">
+            <span><b>01</b> ENDPOINTS</span>
+            <span><b>02</b> CATEGORIES</span>
+            <span><b>03</b> REQUESTS</span>
+          </div>
+        </div>
+        <div class="login-visual" aria-hidden="true">
+          <div class="login-console-card">
+            <div class="login-console-header"><span>ADMIN WORKSPACE</span><b>READY · 200 OK</b></div>
+            <div class="login-console-path"><strong>GET</strong><code>/api/demo/example-todo/</code></div>
+            <pre>{
+  "workspace": "active",
+  "endpoints": "managed"
+}</pre>
+          </div>
+          <div class="login-orbit">
+            <span class="login-orbit-core">XE</span>
+            <span class="login-orbit-tag login-orbit-get">API</span>
+            <span class="login-orbit-tag login-orbit-post">ADMIN</span>
+          </div>
+          <span class="login-visual-caption">ONE WORKSPACE · FULL CONTROL</span>
+        </div>
+        <div class="login-features">
+          <div><span>01 / ORGANIZE</span><strong>Manage endpoints</strong></div>
+          <div><span>02 / OVERSEE</span><strong>Keep things moving</strong></div>
+        </div>
+        <div class="login-desktop-note">
+          <span class="login-note-label">A NOTE FOR ADMINS / 01</span>
+          <p>Build with care.<br><em>Manage with confidence.</em></p>
+          <span class="login-note-footer">YOUR WORKSPACE, READY <span aria-hidden="true">↗</span></span>
+        </div>
+      </section>
+      <section class="login-panel" aria-labelledby="admin-login-title">
+        <p class="login-panel-kicker">PRIVATE CONSOLE <span> / </span> ADMIN SIGN IN</p>
+        <div class="panel-heading">
+          <span class="section-number">01</span>
+          <h2 id="admin-login-title">Welcome back</h2>
+        </div>
+        <p class="login-description">Sign in to manage your API workspace and pick up where you left off.</p>
+        {% if user.is_authenticated %}
+          <p class="field-error" role="alert">You are signed in, but this account is not authorized to access the admin site.</p>
+        {% endif %}
+        {% if form.errors %}
+          <p class="field-error" role="alert">Username or password is incorrect. Try again.</p>
+        {% endif %}
+        {% if next %}<p class="login-auth-note">ADMIN AUTHENTICATION REQUIRED</p>{% endif %}
+        <form action="{{ app_path }}" method="post" class="brutal-form" id="login-form">
+          {% csrf_token %}
+          <div class="form-field">
+            <label for="{{ form.username.id_for_label }}">USERNAME</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+          </div>
+          <div class="form-field">
+            <label for="{{ form.password.id_for_label }}">PASSWORD</label>
+            {{ form.password }}
+            {{ form.password.errors }}
+          </div>
+          <input type="hidden" name="next" value="{{ next }}">
+          {% url 'admin_password_reset' as password_reset_url %}
+          {% if password_reset_url %}
+            <p class="password-reset-link"><a href="{{ password_reset_url }}">{% translate "Forgotten your login credentials?" %}</a></p>
+          {% endif %}
+          <button class="pill-button form-submit" type="submit">Continue to admin workspace <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="login-footnote"><span aria-hidden="true">●</span> Your admin session is protected.</p>
+      </section>
+    </div>
+    <div class="login-meta"><span>XEON'S API / ADMIN CONSOLE</span><span>BUILD SOMETHING USEFUL.</span></div>
+  </div>
+</main>
+{% endblock %}

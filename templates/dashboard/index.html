@@ -1,0 +1,149 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{% url 'dashboard' %}">
+      <span class="brand-mark">XE</span><span class="brand-copy"><b>XEON'S API</b><small>V1.0 · OPEN TO USE</small></span>
+    </a>
+    <div class="user-chip"><strong>{% if request.user.is_staff %}HRITHIK UDAY{% else %}Xeon{% endif %}</strong><small>{% if request.user.is_staff %}ADMIN{% else %}MEMBER{% endif %}</small></div>
+    <nav aria-label="Main navigation">
+      <p class="nav-label">MAIN</p>
+      <a class="nav-item active" href="{% url 'dashboard' %}"><span class="nav-code">00</span>Dashboard</a>
+      <p class="nav-label">API CATEGORIES</p>
+      {% for category in categories %}
+      <div class="category-group">
+        <button class="nav-item category-toggle" type="button" data-category="{{ category.slug }}" aria-expanded="false" aria-controls="category-menu-{{ category.slug }}">
+          <span class="nav-code">{{ category.icon }}</span>
+          <span class="category-name">{{ category.name }}</span>
+          <span class="category-count">{{ category.active_count }}</span>
+          <span class="category-chevron" aria-hidden="true">⌄</span>
+        </button>
+        <div class="category-menu" id="category-menu-{{ category.slug }}" hidden>
+          {% for endpoint in endpoints %}
+          {% if endpoint.category_id == category.id %}
+          <button class="category-endpoint-link api-preview-trigger" type="button" data-api-url="{{ endpoint.path }}" data-api-method="{{ endpoint.http_method }}" data-api-name="{{ endpoint.name }}">
+            <span class="category-endpoint-method">[ {{ endpoint.http_method }} ]</span>
+            <span class="category-endpoint-name">{{ endpoint.name }}</span>
+          </button>
+          {% endif %}
+          {% endfor %}
+          {% for plugin in plugins %}
+          {% if plugin.category_id == category.id %}
+          {% if plugin.requires_api_key %}
+          <button class="category-endpoint-link" type="button" disabled>
+            <span class="category-endpoint-method">[ {{ plugin.http_method }} ]</span>
+            <span class="category-endpoint-name">{{ plugin.name }} · KEY REQUIRED</span>
+          </button>
+          {% else %}
+          <button class="category-endpoint-link api-preview-trigger" type="button" data-api-url="{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}" data-api-method="{{ plugin.http_method }}" data-api-name="{{ plugin.name }}">
+            <span class="category-endpoint-method">[ {{ plugin.http_method }} ]</span>
+            <span class="category-endpoint-name">{{ plugin.name }}</span>
+          </button>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+          {% if not category.active_count %}
+          <span class="category-menu-empty">No active endpoints</span>
+          {% endif %}
+        </div>
+      </div>
+      {% empty %}
+      <span class="nav-empty">No categories yet</span>
+      {% endfor %}
+      <p class="nav-label">MORE</p>
+      {% if request.user.is_staff %}
+      <a class="nav-item" href="{% url 'admin:dashboard_plugin_changelist' %}" data-category="plugins"><span class="nav-code">05</span>Plugins</a>
+      {% else %}
+      <span class="nav-item" aria-disabled="true" data-category="plugins"><span class="nav-code">05</span>Plugins <small>ADMIN ONLY</small></span>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="nav-item nav-button" type="submit"><span class="nav-code">06</span>Logout</button></form>
+      {% else %}
+      <a class="nav-item" href="{% url 'login' %}"><span class="nav-code">06</span>Login</a>
+      {% endif %}
+    </nav>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><span class="page-title">Dashboard</span><div class="topbar-actions"><span class="alerts">2 ALERTS</span>{% if request.user.is_staff %}<a class="pill-button upload-link" href="{% url 'upload_api' %}">Upload API <span>→</span></a>{% endif %}</div></header>
+    <div class="breadcrumb"><span>DASHBOARD · V1.0 · OPEN TO USE</span><span>UPLOAD &gt; CONFIGURE &gt; SHIP</span></div>
+    {% if messages %}<div class="messages">{% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    <section class="welcome">
+      <span class="section-number">01</span>
+      <h1>Welcome back, Xeon</h1>
+      <span class="date-stamp">[ {{ today|date:"M d Y"|upper }} ]</span>
+    </section>
+    <section class="stats-grid" aria-label="Dashboard statistics">
+      <article class="stat-card"><span class="mono-label">TOTAL VISITORS</span><strong class="stat-value" data-stat="total_visitors">—</strong><small class="trend">↑ LIVE</small></article>
+      <article class="stat-card"><span class="mono-label">TOTAL FEATURES</span><strong class="stat-value" data-stat="total_features">{{ active_feature_count }}</strong><small class="trend">↑ ACTIVE APIS</small></article>
+      <article class="stat-card stat-blue"><span class="mono-label">YOUR IP ADDRESS</span><strong class="stat-value ip-value" data-stat="your_ip">—</strong><small class="ip-online">● ONLINE</small></article>
+      <article class="stat-card"><span class="mono-label">TOTAL REQUESTS</span><strong class="stat-value" data-stat="total_requests">—</strong><small class="trend">↑ ALL TIME</small></article>
+    </section>
+    <section class="content-grid">
+      <article class="calendar-panel">
+        <div class="panel-heading"><span class="section-number">02</span><h2>Calendar</h2><span class="date-stamp">[ {{ month_name }} ]</span></div>
+        <div class="calendar-grid" role="grid" aria-label="Calendar for {{ month_name }}">
+          <div class="calendar-cell calendar-day">SUN</div><div class="calendar-cell calendar-day">MON</div><div class="calendar-cell calendar-day">TUE</div><div class="calendar-cell calendar-day">WED</div><div class="calendar-cell calendar-day">THU</div><div class="calendar-cell calendar-day">FRI</div><div class="calendar-cell calendar-day">SAT</div>
+          {% for week in calendar_weeks %}{% for day in week %}<div class="calendar-cell {% if not day %}calendar-blank{% endif %} {% if day == today.day %}today{% endif %}">{% if day %}{{ day }}{% endif %}</div>{% endfor %}{% endfor %}
+        </div>
+      </article>
+      <article class="quick-panel" id="quick-access">
+        <div class="panel-heading"><span class="section-number">03</span><h2>Quick API Access</h2><span class="date-stamp">[ REST ]</span></div>
+        <div class="api-list">
+          {% for endpoint in endpoints %}
+          <div class="api-row" id="api-{{ endpoint.pk }}" data-api-category="{{ endpoint.category.slug }}" data-api-url="{{ endpoint.path }}">
+            <div class="api-row-main">
+              <span class="method-tag">[ {{ endpoint.http_method }} ]</span>
+              <div class="api-name-group">
+                <button class="api-name api-preview-trigger" type="button" data-api-url="{{ endpoint.path }}" data-api-method="{{ endpoint.http_method }}" data-api-name="{{ endpoint.name }}" title="{{ endpoint.description|default:endpoint.name }}">{{ endpoint.name }}</button>
+                {% if request.user.is_staff %}<a class="edit-link" href="{% url 'edit_api' endpoint.pk %}" aria-label="Edit {{ endpoint.name }}">EDIT</a>{% endif %}
+              </div>
+              <span class="api-category">{{ endpoint.category.name }}</span>
+              <button class="try-button api-preview-trigger" type="button" data-api-url="{{ endpoint.path }}" data-api-method="{{ endpoint.http_method }}" data-api-name="{{ endpoint.name }}">Try <span>→</span></button>
+            </div>
+            <div class="api-row-url" data-api-url-details hidden>
+              <code>{{ request.scheme }}://{{ request.get_host }}{{ endpoint.path }}</code>
+              <button class="copy-api-url" type="button" data-copy-url="{{ request.scheme }}://{{ request.get_host }}{{ endpoint.path }}">COPY URL</button>
+            </div>
+          </div>
+          {% endfor %}
+          {% for plugin in plugins %}
+          <div class="api-row" id="plugin-{{ plugin.pk }}" data-api-category="{{ plugin.category.slug }}" data-api-url="{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}">
+            <div class="api-row-main">
+              <span class="method-tag">[ {{ plugin.http_method }} ]</span>
+              <div class="api-name-group">
+                {% if plugin.requires_api_key %}
+                <span class="api-name api-name-static" title="{{ plugin.description|default:plugin.name }}">{{ plugin.name }}</span>
+                {% else %}
+                <button class="api-name api-preview-trigger" type="button" data-api-url="{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}" data-api-method="{{ plugin.http_method }}" data-api-name="{{ plugin.name }}" title="{{ plugin.description|default:plugin.name }}">{{ plugin.name }}</button>
+                {% endif %}
+                {% if request.user.is_staff %}<a class="edit-link" href="{% url 'admin:dashboard_plugin_change' plugin.pk %}" aria-label="Edit {{ plugin.name }}">EDIT</a>{% endif %}
+              </div>
+              <span class="api-category">{{ plugin.category.name }} · PLUGIN</span>
+              {% if plugin.requires_api_key %}
+              <span class="try-button" aria-disabled="true" title="Add the API key in your API client">KEY REQUIRED</span>
+              {% else %}
+              <a class="try-button" href="{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}">Open <span>→</span></a>
+              {% endif %}
+            </div>
+            <div class="api-row-url" data-api-url-details>
+              <code>{{ request.scheme }}://{{ request.get_host }}{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}</code>
+              <button class="copy-api-url" type="button" data-copy-url="{{ request.scheme }}://{{ request.get_host }}{{ plugin.path }}{% if plugin.http_method == 'GET' %}?url={% endif %}">COPY URL</button>
+              {% if plugin.requires_api_key %}<span>API KEY REQUIRED</span>{% endif %}
+            </div>
+          </div>
+          {% endfor %}
+          <div class="empty-state" data-filter-empty {% if endpoints or plugins %}hidden{% endif %}>No matching APIs yet.{% if request.user.is_staff %} <a href="{% url 'upload_api' %}">Upload an API →</a>{% endif %}</div>
+        </div>
+        <section class="api-response" data-api-preview aria-live="polite" hidden>
+          <div class="api-response-heading"><span class="mono-label">API RESPONSE</span><button class="api-response-close" type="button" data-api-preview-close>Close ×</button></div>
+          <div class="api-response-status" data-api-response-status></div>
+          <pre class="api-response-body" data-api-response-body></pre>
+        </section>
+      </article>
+    </section>
+    {% if request.user.is_staff %}<div class="admin-tools"><a href="/admin/">DJANGO ADMIN ↗</a></div>{% endif %}
+  </main>
+</div>
+{% endblock %}

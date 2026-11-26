@@ -1,0 +1,75 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Documentation{% endblock %}
+{% block body %}
+<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{% url 'dashboard' %}">
+      <span class="brand-mark">XE</span><span class="brand-copy"><b>XEON'S API</b><small>V1.0 · OPEN TO USE</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <p class="nav-label">MAIN</p>
+      <a class="nav-item" href="{% url 'dashboard' %}"><span class="nav-code">00</span>Dashboard</a>
+      <a class="nav-item active" href="{% url 'docs' %}"><span class="nav-code">01</span>Documentation</a>
+      {% if request.user.is_staff %}
+      <p class="nav-label">ADMIN</p>
+      <a class="nav-item" href="{% url 'upload_api' %}"><span class="nav-code">02</span>Upload API</a>
+      <a class="nav-item" href="{% url 'admin:dashboard_plugin_changelist' %}"><span class="nav-code">03</span>Plugins</a>
+      {% endif %}
+    </nav>
+  </aside>
+  <main class="main-content">
+    <header class="topbar"><span class="page-title">Documentation</span><a class="pill-button" href="{% url 'dashboard' %}">← Dashboard</a></header>
+    <div class="breadcrumb"><span>DASHBOARD · DOCS</span><span>API USAGE GUIDE</span></div>
+    <section class="welcome compact-welcome">
+      <span class="section-number">01</span>
+      <h1>How to use XEON'S API</h1>
+    </section>
+    <div class="docs-content">
+      <p class="docs-intro">Browse active endpoints, preview their responses, and copy a URL to use an API from your own app or API client.</p>
+      <div class="docs-grid">
+        <section class="docs-section">
+          <h2>Browse and preview</h2>
+          <ol>
+            <li>Choose an API category in the left navigation to expand its endpoints.</li>
+            <li>Select an endpoint to run it and view its status and response in Quick API Access.</li>
+            <li>Use <strong>Copy URL</strong> beside the selected endpoint to copy its full address.</li>
+          </ol>
+          <p>For example, the seeded demo endpoint returns a sample todo:</p>
+          <pre class="docs-code">GET /api/demo/example-todo/</pre>
+        </section>
+        <section class="docs-section">
+          <h2>Call an endpoint</h2>
+          <p>Every endpoint URL follows this format. Replace the placeholders with the category and endpoint slugs shown in the dashboard.</p>
+          <pre class="docs-code">/api/&lt;category-slug&gt;/&lt;endpoint-slug&gt;/</pre>
+          <p>GET endpoints accept parameters in the query string:</p>
+          <pre class="docs-code">GET /api/&lt;category-slug&gt;/&lt;endpoint-slug&gt;/?q=history</pre>
+          <p>POST endpoints accept a JSON object. Use parameter names configured for that endpoint.</p>
+          <pre class="docs-code">POST /api/&lt;category-slug&gt;/&lt;endpoint-slug&gt;/
+Content-Type: application/json
+
+{"q": "history"}</pre>
+          <p>Active configured APIs and plugins are listed by <code>GET /api/endpoints/</code>.</p>
+        </section>
+        <section class="docs-section">
+          <h2>Parameters and responses</h2>
+          <p>Each endpoint may define required parameters. Missing or unknown parameters return a validation error. Check the endpoint configuration or response preview for details.</p>
+          <p>The dashboard preview sends GET requests without query parameters and POST requests with an empty JSON object. Use the full copied URL and supply any required parameters in your API client.</p>
+          <p>Successful GET responses are cached for 30 seconds by URL and query. Repeated requests may be faster but can return briefly stale data; POST responses and errors are not cached.</p>
+        </section>
+        <section class="docs-section">
+          <h2>Add an API <small>(staff only)</small></h2>
+          <p>Choose <a class="docs-link" href="{% url 'upload_api' %}">Upload API</a> and enter an endpoint name, category, HTTP method, public upstream URL, and parameter schema. You can also import multiple endpoints from a JSON file.</p>
+          <p>After saving, the active endpoint appears under its category on the dashboard.</p>
+        </section>
+        <section class="docs-section">
+          <h2>Create a plugin <small>(staff only)</small></h2>
+          <p>Open <strong>Plugins</strong> in the dashboard or Django admin to add a Python handler. It must define <code>handler(request)</code> and return a dictionary. The live endpoint uses the same site and the path shown in the plugin record.</p>
+          <p>When the plugin requires its generated API key, send it in an <code>X-API-Key</code> header or as <code>Authorization: Bearer &lt;key&gt;</code>. The key is shown once when created; admins can rotate it.</p>
+          <p>Plugin execution is best-effort isolation, not a secure sandbox. Only run code from fully trusted admins; plugin code can access service files and the network.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}

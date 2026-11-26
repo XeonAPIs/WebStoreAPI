@@ -1,0 +1,10 @@
+{
+  "name": "xeon-api-frontend",
+  "private": true,
+  "scripts": {
+    "obfuscate:frontend": "javascript-obfuscator frontend/dashboard.js --output static/dashboard/js/dashboard.obfuscated.js --compact true --identifier-names-generator hexadecimal --string-array true --string-array-encoding base64 --string-array-threshold 0.6"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "4.1.1"
+  }
+}
