@@ -80,7 +80,7 @@ python manage.py test
 
 ## Deploying to Render (manual Web Service, no Blueprint)
 
-1. Push this repository to GitHub. In the Render Dashboard, choose **New + → Web Service**, connect the repository, and select the Python runtime. Do not create a Blueprint.
+1. Push this repository to GitHub. In the Render Dashboard, choose **New + → Web Service** and connect the repository. For the commands below, select the Python runtime. If the service uses Docker instead, the repository's `Dockerfile` installs dependencies, runs migrations and collects static files at startup, then starts Gunicorn on Render's `$PORT`. Do not create a Blueprint.
 2. Set the build command to:
 
    ```sh
